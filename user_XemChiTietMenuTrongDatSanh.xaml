@@ -1,0 +1,63 @@
+﻿<Window x:Class="DoAnCN_Net.user_XemChiTietMenuTrongDatSanh"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Danh sách Menu"
+        Height="500"
+        Width="800"
+        WindowStartupLocation="CenterOwner"
+        Background="#F5F7FA">
+
+    <Grid Margin="15">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- DANH SÁCH MENU -->
+        <Border Grid.Column="0"
+                Background="White"
+                CornerRadius="10"
+                Padding="10">
+
+            <ListBox x:Name="lstMenu"
+                     SelectionChanged="lstMenu_SelectionChanged"
+                     DisplayMemberPath="TenMenu"/>
+        </Border>
+
+        <!-- CHI TIẾT -->
+        <Border Grid.Column="2"
+                Background="White"
+                CornerRadius="10"
+                Padding="15">
+
+            <StackPanel>
+
+                <TextBlock Text="CHI TIẾT MENU"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Margin="0,0,0,15"/>
+
+                <TextBlock Text="Tên Menu:"
+                           FontWeight="Bold"/>
+
+                <TextBlock x:Name="txtTenMenu"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="Loại Menu:"
+                           FontWeight="Bold"/>
+
+                <TextBlock x:Name="txtLoaiMenu"
+                           Margin="0,0,0,15"/>
+
+                <DataGrid x:Name="dgChiTiet"
+                          AutoGenerateColumns="True"
+                          Height="250"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>

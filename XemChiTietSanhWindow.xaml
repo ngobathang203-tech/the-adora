@@ -1,0 +1,253 @@
+﻿<Window x:Class="DoAnCN_Net.XemChiTietSanhWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chi tiết sảnh" Width="620" Height="750"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize" Background="#FDFAF5">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="Gold"   Color="#C9A84C"/>
+        <SolidColorBrush x:Key="TextP"  Color="#2A1F0A"/>
+        <SolidColorBrush x:Key="TextS"  Color="#6B5430"/>
+        <SolidColorBrush x:Key="TextM"  Color="#A08050"/>
+        <SolidColorBrush x:Key="Border" Color="#E8D9B5"/>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20,16">
+
+            <!-- Header -->
+            <Border Background="#F5EDD8" BorderBrush="#C9A84C"
+                    BorderThickness="0,0,0,1" Padding="0,0,0,12" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock x:Name="lblTenSanh"
+                               FontSize="22" FontWeight="Bold"
+                               Foreground="#2A1F0A"
+                               FontFamily="Playfair Display, Georgia, serif"/>
+                    <TextBlock x:Name="lblChiNhanh"
+                               FontSize="12" Foreground="#C9A84C"
+                               FontFamily="Montserrat, Segoe UI" Margin="0,3,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Ảnh -->
+            <Border Height="200" ClipToBounds="True"
+                    BorderBrush="#E8D9B5" BorderThickness="1"
+                    Margin="0,0,0,16" Background="#F5EDD8">
+                <Image x:Name="imgSanh" Stretch="UniformToFill"/>
+            </Border>
+
+            <!-- Thông tin nhanh -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Background="#FBF0CC"
+                        BorderBrush="#E8D9B5" BorderThickness="1"
+                        Padding="12,10" Margin="0,0,6,0">
+                    <StackPanel>
+                        <TextBlock Text="Sức chứa" FontSize="10" Foreground="#A08050"
+                                   FontFamily="Montserrat, Segoe UI"/>
+                        <TextBlock x:Name="lblSucChua" FontSize="15" FontWeight="Bold"
+                                   Foreground="#2A1F0A" Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Background="#FBF0CC"
+                        BorderBrush="#E8D9B5" BorderThickness="1"
+                        Padding="12,10" Margin="3,0,3,0">
+                    <StackPanel>
+                        <TextBlock Text="Giá thuê" FontSize="10" Foreground="#A08050"
+                                   FontFamily="Montserrat, Segoe UI"/>
+                        <TextBlock x:Name="lblGia" FontSize="13" FontWeight="Bold"
+                                   Foreground="#C9A84C" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Background="#FBF0CC"
+                        BorderBrush="#E8D9B5" BorderThickness="1"
+                        Padding="12,10" Margin="6,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Đánh giá" FontSize="10" Foreground="#A08050"
+                                   FontFamily="Montserrat, Segoe UI"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                            <TextBlock x:Name="lblSao" FontSize="15" FontWeight="Bold"
+                                       Foreground="#C9A84C"/>
+                            <TextBlock Text=" ★" FontSize="13" Foreground="#C9A84C"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Địa chỉ -->
+            <Border Background="White" BorderBrush="#E8D9B5" BorderThickness="1"
+                    Padding="14,10" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="ĐỊA CHỈ" FontSize="10" Foreground="#A08050"
+                               FontFamily="Montserrat, Segoe UI" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="lblDiaChi" FontSize="12" Foreground="#2A1F0A"
+                               TextWrapping="Wrap" FontFamily="Montserrat, Segoe UI"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Dịch vụ kèm theo -->
+            <Border Background="White" BorderBrush="#E8D9B5" BorderThickness="1"
+                    Padding="14,12" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="DỊCH VỤ KÈM THEO" FontSize="10" Foreground="#A08050"
+                               FontFamily="Montserrat, Segoe UI" Margin="0,0,0,10"/>
+                    <ItemsControl x:Name="icDichVu">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#FBF0CC" BorderBrush="#E8D9B5"
+                                        BorderThickness="1" Padding="10,5"
+                                        Margin="0,0,6,6">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="✦ " Foreground="#C9A84C" FontSize="10"/>
+                                        <TextBlock Text="{Binding TenDichVu}"
+                                                   FontSize="11" Foreground="#2A1F0A"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Lưu ý menu -->
+            <Border Background="#FBF0CC" BorderBrush="#C9A84C" BorderThickness="1"
+                    Padding="14,10" Margin="0,0,0,16">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="ℹ " Foreground="#C9A84C" FontSize="13"
+                               VerticalAlignment="Top" Margin="0,1,6,0"/>
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#6B5430"
+                               FontFamily="Montserrat, Segoe UI">
+                        Sảnh cho phép <Bold>tự chọn menu</Bold> (chay hoặc mặn).
+                        Thực đơn sẽ được tư vấn sau khi đặt sảnh thành công.
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+
+            <!-- Đánh giá -->
+            <Border Background="White" BorderBrush="#E8D9B5" BorderThickness="1"
+                    Padding="14,12" Margin="0,0,0,16">
+                <StackPanel>
+                    <TextBlock Text="ĐÁNH GIÁ TỪ KHÁCH HÀNG" FontSize="10"
+                               Foreground="#A08050" FontFamily="Montserrat, Segoe UI"
+                               Margin="0,0,0,10"/>
+
+                    <ItemsControl x:Name="icDanhGia">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#F0E6CC" BorderThickness="0,0,0,1"
+                                        Padding="0,8">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="{Binding TenKhachHang}"
+                                                       FontSize="12" FontWeight="Bold"
+                                                       Foreground="#2A1F0A"
+                                                       FontFamily="Montserrat, Segoe UI"/>
+                                            <TextBlock x:Name="lblSaoItem"
+                                                       FontSize="11" Foreground="#C9A84C"
+                                                       Margin="8,0,0,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding NgayDanhGia, StringFormat={}{0:dd/MM/yyyy}}"
+                                                       FontSize="10" Foreground="#A08050"
+                                                       Margin="8,0,0,0" VerticalAlignment="Center"
+                                                       FontFamily="Montserrat, Segoe UI"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding NoiDung}"
+                                                   FontSize="12" Foreground="#6B5430"
+                                                   TextWrapping="Wrap"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Form viết đánh giá -->
+                    <Border Background="#FDFAF5" BorderBrush="#E8D9B5"
+                            BorderThickness="1" Padding="12" Margin="0,12,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Viết đánh giá của bạn" FontSize="11"
+                                       Foreground="#6B5430" FontWeight="Bold"
+                                       FontFamily="Montserrat, Segoe UI" Margin="0,0,0,8"/>
+
+                            <!-- Chọn sao -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Text="Số sao: " FontSize="11" Foreground="#A08050"
+                                           VerticalAlignment="Center"
+                                           FontFamily="Montserrat, Segoe UI"/>
+                                <ComboBox x:Name="cboSoSao" Width="80" FontSize="11">
+                                    <ComboBoxItem Content="⭐ 1"/>
+                                    <ComboBoxItem Content="⭐⭐ 2"/>
+                                    <ComboBoxItem Content="⭐⭐⭐ 3"/>
+                                    <ComboBoxItem Content="⭐⭐⭐⭐ 4"/>
+                                    <ComboBoxItem Content="⭐⭐⭐⭐⭐ 5" IsSelected="True"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <TextBox x:Name="txtDanhGia"
+                                     Padding="8" MinHeight="60"
+                                     TextWrapping="Wrap" AcceptsReturn="True"
+                                     BorderBrush="#E8D9B5" BorderThickness="1"
+                                     FontSize="12" FontFamily="Montserrat, Segoe UI"
+                                     Foreground="#2A1F0A" Background="White"
+                                     Margin="0,0,0,8"/>
+
+                            <Button Content="Gửi đánh giá"
+                                    Click="BtnGuiDanhGia_Click"
+                                    HorizontalAlignment="Right"
+                                    Padding="18,7"
+                                    Background="#C9A84C" Foreground="White"
+                                    BorderThickness="0" Cursor="Hand"
+                                    FontSize="11" FontFamily="Montserrat, Segoe UI"
+                                    FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Nút bottom -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="Đóng"
+                        Click="BtnDong_Click" Height="42"
+                        Background="Transparent" Foreground="#A08050"
+                        BorderBrush="#E8D9B5" BorderThickness="1"
+                        Cursor="Hand" FontSize="13"
+                        FontFamily="Montserrat, Segoe UI"/>
+
+                <Button Grid.Column="2" Content="🗓  Đặt sảnh này"
+                        Click="BtnDatNgay_Click" Height="42"
+                        BorderThickness="0" Cursor="Hand"
+                        FontSize="13" FontWeight="Bold"
+                        FontFamily="Montserrat, Segoe UI"
+                        Foreground="White">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#C9A84C" Offset="0"/>
+                            <GradientStop Color="#D4A940" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>

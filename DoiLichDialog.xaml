@@ -1,0 +1,75 @@
+<Window x:Class="DoAnCN_Net.UI.DoiLichDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Doi lich to chuc"
+        Width="500" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <StackPanel Margin="24,20">
+        <!-- Thong tin cu -->
+        <TextBlock Text="Thong tin hien tai" FontWeight="SemiBold" FontSize="13" Margin="0,0,0,6"/>
+        <Border Background="#F0F4FF" CornerRadius="6" Padding="12,10" Margin="0,0,0,16">
+            <TextBlock x:Name="lblThongTinCu" TextWrapping="Wrap" Foreground="#333" FontSize="13"/>
+        </Border>
+        <!-- Ngay moi -->
+        <TextBlock Text="Ngay to chuc moi" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <DatePicker x:Name="dpNgayMoi" Margin="0,0,0,12"
+                    SelectedDateChanged="DpNgayMoi_Changed"/>
+        <!-- Gio -->
+        <Grid Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Gio bat dau" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <ComboBox x:Name="cboGioBatDau" SelectionChanged="Input_Changed"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Gio ket thuc" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <ComboBox x:Name="cboGioKetThuc" SelectionChanged="Input_Changed"/>
+            </StackPanel>
+        </Grid>
+        <!-- Canh bao trung lich -->
+        <Border x:Name="pnlTrungLich" Background="#FFF3E0" CornerRadius="6"
+                Padding="10,7" Margin="0,0,0,12" Visibility="Collapsed">
+            <TextBlock Text="Sanh da co lich trong khung gio nay!"
+                       Foreground="#E65100" FontWeight="SemiBold"/>
+        </Border>
+        <!-- Sanh -->
+        <TextBlock Text="Sanh" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <ComboBox x:Name="cboSanh"
+                  DisplayMemberPath="TenSanh"
+                  SelectedValuePath="MaSanh"
+                  Margin="0,0,0,12"
+                  SelectionChanged="CboSanh_Changed"/>
+        <!-- Menu -->
+        <TextBlock Text="Menu" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <ComboBox x:Name="cboMenu"
+                  DisplayMemberPath="TenMenu"
+                  SelectedValuePath="MaMenu"
+                  Margin="0,0,0,12"/>
+        <!-- Ghi chu -->
+        <TextBlock Text="Ghi chu ly do doi lich" FontWeight="SemiBold" Margin="0,0,0,4"/>
+        <TextBox x:Name="txtGhiChu" Height="60" TextWrapping="Wrap"
+                 AcceptsReturn="True" Margin="0,0,0,16" Padding="8"/>
+        <!-- Error -->
+        <Border x:Name="pnlError" Background="#FFEBEE" CornerRadius="6"
+                Padding="10,7" Margin="0,0,0,12" Visibility="Collapsed">
+            <TextBlock x:Name="txtError" Foreground="#C62828" TextWrapping="Wrap"/>
+        </Border>
+        <!-- Buttons -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,4,0,4">
+            <Button Content="Huy bo" Width="90" Height="36"
+                    Background="#EEE" Foreground="#333"
+                    BorderThickness="0" Cursor="Hand" Margin="0,0,10,0"
+                    Click="btnCancel_Click"/>
+            <Button x:Name="btnSave" Content="Luu doi lich"
+                    Width="120" Height="36"
+                    Background="#1565C0" Foreground="White"
+                    BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"
+                    Click="btnSave_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

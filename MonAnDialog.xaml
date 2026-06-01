@@ -1,0 +1,136 @@
+﻿<Window x:Class="DoAnCN_Net.UI.MonAnDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Món ăn" Width="400" Height="280"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <Style x:Key="Input" TargetType="TextBox">
+            <Setter Property="Height"          Value="40"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="BorderBrush"     Value="#E2E5ED"/>
+            <Setter Property="Background"      Value="#F8F9FC"/>
+            <Setter Property="Foreground"      Value="#222222"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="12,0" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#3d5af1"/>
+                                <Setter Property="Background"  Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Btn" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="8" Padding="20,10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.84"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.70"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border CornerRadius="14" Background="White">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" Opacity="0.13" BlurRadius="32" ShadowDepth="5"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Border Grid.Row="0" Background="#1a1a2e" CornerRadius="14,14,0,0"
+                    MouseLeftButtonDown="Header_MouseLeftButtonDown">
+                <Grid Margin="18,0,10,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🍽" FontSize="16" Margin="0,0,9,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="txtTitle" Text="Thêm món ăn"
+                                   FontSize="14" FontWeight="Bold" Foreground="White"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="✕" HorizontalAlignment="Right"
+                            Width="30" Height="30"
+                            Background="Transparent" BorderThickness="0"
+                            Foreground="#7788AA" FontSize="14"
+                            Click="btnCancel_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- FORM -->
+            <StackPanel Grid.Row="1" Margin="22,18,22,4">
+
+                <TextBlock Text="Tên món" FontSize="11" FontWeight="SemiBold"
+                           Foreground="#888888" Margin="2,0,0,5"/>
+                <TextBox x:Name="txtTenMon" Style="{StaticResource Input}" MaxLength="255"/>
+
+                <TextBlock Text="Giá (đồng)" FontSize="11" FontWeight="SemiBold"
+                           Foreground="#888888" Margin="2,14,0,5"/>
+                <TextBox x:Name="txtGia" Style="{StaticResource Input}" MaxLength="12"/>
+
+                <Border x:Name="pnlError" Margin="0,10,0,0"
+                        Background="#FFF0F2" CornerRadius="7" Padding="10,7"
+                        Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="! " Foreground="#e94560" FontSize="12" FontWeight="Bold"/>
+                        <TextBlock x:Name="txtError" Foreground="#e94560"
+                                   FontSize="12" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- FOOTER -->
+            <Border Grid.Row="2" BorderBrush="#EBEBEB" BorderThickness="0,1,0,0"
+                    Padding="22,12">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource Btn}"
+                            Background="#EEEEEE" Foreground="#666666"
+                            Width="84" Content="Hủy"
+                            Click="btnCancel_Click"/>
+                    <Button x:Name="btnSave"
+                            Style="{StaticResource Btn}"
+                            Background="#3d5af1" Foreground="White"
+                            Width="110" Content="+ Thêm"
+                            Margin="10,0,0,0"
+                            Click="btnSave_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

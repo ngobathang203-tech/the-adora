@@ -1,0 +1,347 @@
+﻿<UserControl x:Class="DoAnCN_Net.SanhUser_Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cnv="clr-namespace:DoAnCN_Net">
+
+    <UserControl.Resources>
+        <cnv:StringToImageConverters x:Key="StringToImageConverters"/>
+
+        <!-- ===== MÀU SẮC (đồng bộ TrangChu_User) ===== -->
+        <SolidColorBrush x:Key="GoldPrimary"    Color="#C9A84C"/>
+        <SolidColorBrush x:Key="GoldLight"      Color="#D4A940"/>
+        <SolidColorBrush x:Key="GoldTint"       Color="#FBF0CC"/>
+        <SolidColorBrush x:Key="SurfaceWarm"    Color="#F5EDD8"/>
+        <SolidColorBrush x:Key="CardBorder"     Color="#E8D9B5"/>
+        <SolidColorBrush x:Key="TextPrimary"    Color="#2A1F0A"/>
+        <SolidColorBrush x:Key="TextSecondary"  Color="#6B5430"/>
+        <SolidColorBrush x:Key="TextMuted"      Color="#A08050"/>
+
+        <!-- Gradient nút vàng -->
+        <LinearGradientBrush x:Key="GoldButtonGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#C9A84C" Offset="0"/>
+            <GradientStop Color="#D4A940" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- ===== STYLE: Ô TÌM KIẾM ===== -->
+        <Style x:Key="SearchBoxStyle" TargetType="TextBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Montserrat, Segoe UI"/>
+            <Setter Property="Foreground" Value="#2A1F0A"/>
+            <Setter Property="BorderBrush" Value="#E8D9B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#C9A84C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===== STYLE: COMBOBOX ===== -->
+        <Style x:Key="FilterComboStyle" TargetType="ComboBox">
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Montserrat, Segoe UI"/>
+            <Setter Property="Foreground" Value="#2A1F0A"/>
+            <Setter Property="BorderBrush" Value="#E8D9B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#FFFFFF"/>
+        </Style>
+
+        <!-- ===== STYLE: NÚT "TẤT CẢ" ===== -->
+        <Style x:Key="ResetButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A08050"/>
+            <Setter Property="BorderBrush" Value="#E8D9B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontFamily" Value="Montserrat, Segoe UI"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#FBF0CC"/>
+                                <Setter TargetName="bg" Property="BorderBrush" Value="#C9A84C"/>
+                                <Setter Property="Foreground" Value="#C9A84C"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ===== STYLE: NÚT XEM CHI TIẾT ===== -->
+        <Style x:Key="DetailButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource GoldButtonGradient}"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontFamily" Value="Montserrat, Segoe UI"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg" Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- THÊM style nút outline vào Resources (cạnh DetailButtonStyle) -->
+        <Style x:Key="OutlineButtonStyle" TargetType="Button">
+            <Setter Property="Background"       Value="Transparent"/>
+            <Setter Property="Foreground"       Value="{StaticResource GoldPrimary}"/>
+            <Setter Property="BorderBrush"      Value="{StaticResource GoldPrimary}"/>
+            <Setter Property="BorderThickness"  Value="1"/>
+            <Setter Property="Height"           Value="38"/>
+            <Setter Property="FontSize"         Value="11"/>
+            <Setter Property="FontFamily"       Value="Montserrat, Segoe UI"/>
+            <Setter Property="FontWeight"       Value="SemiBold"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#FBF0CC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="#FDFAF5" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ===== HEADER ===== -->
+        <Border Grid.Row="0" Margin="0,0,0,12" Padding="20,14">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#F5EDD8" Offset="0"/>
+                    <GradientStop Color="#FBF0CC" Offset="0.5"/>
+                    <GradientStop Color="#F5EDD8" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="Transparent" Offset="0"/>
+                    <GradientStop Color="#C9A84C" Offset="0.5"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.BorderThickness>
+                <Thickness Bottom="1"/>
+            </Border.BorderThickness>
+
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="DANH SÁCH SẢNH TIỆC"
+                           FontSize="20" FontWeight="Bold"
+                           Foreground="#2A1F0A"
+                           FontFamily="Playfair Display, Georgia, serif"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="✦  LUXURY EVENT SPACE  ✦"
+                           FontSize="9" Foreground="#C9A84C"
+                           FontFamily="Montserrat, Segoe UI"
+                           HorizontalAlignment="Center" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ===== SEARCH + FILTER ===== -->
+        <Border Grid.Row="1" Background="#FFFFFF"
+                BorderBrush="#E8D9B5" BorderThickness="1"
+                Padding="14,10" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <TextBlock Text="Tìm kiếm" FontSize="11" FontWeight="Medium"
+                               Foreground="#6B5430" FontFamily="Montserrat, Segoe UI"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBox x:Name="txtSearch" Grid.Column="1"
+                         Style="{StaticResource SearchBoxStyle}"
+                         TextChanged="TxtSearch_TextChanged"/>
+
+                <ComboBox x:Name="cboLocChiNhanh" Grid.Column="2"
+                          Style="{StaticResource FilterComboStyle}"
+                          Width="180" Margin="10,0,0,0"
+                          DisplayMemberPath="TenChiNhanh"
+                          SelectedValuePath="MaChiNhanh"
+                          SelectionChanged="CboLocChiNhanh_Changed"/>
+
+                <Button Grid.Column="3" Content="Tất cả"
+                        Style="{StaticResource ResetButtonStyle}"
+                        Width="80" Margin="8,0,0,0"
+                        Click="BtnXoaLoc_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- ===== DANH SÁCH SẢNH ===== -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="icSanh">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#FFFFFF"
+                                BorderBrush="#E8D9B5" BorderThickness="1"
+                                Margin="10" Width="270">
+                            <StackPanel>
+
+                                <!-- Ảnh sảnh -->
+                                <Border ClipToBounds="True" Height="160">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#F5EDD8" Offset="0"/>
+                                            <GradientStop Color="#FBF0CC" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Image Stretch="UniformToFill"
+                                           Source="{Binding HinhAnh, Converter={StaticResource StringToImageConverters}}"/>
+                                </Border>
+
+                                <!-- Đường kẻ vàng separator -->
+                                <Rectangle Height="1">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="Transparent" Offset="0"/>
+                                            <GradientStop Color="#C9A84C" Offset="0.5"/>
+                                            <GradientStop Color="Transparent" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <!-- Thông tin -->
+                                <StackPanel Margin="14,12,14,14">
+
+                                    <!-- Tên sảnh -->
+                                    <TextBlock Text="{Binding TenSanh}"
+                                               FontSize="15" FontWeight="Bold"
+                                               Foreground="#2A1F0A"
+                                               FontFamily="Playfair Display, Georgia, serif"
+                                               Margin="0,0,0,8"
+                                               TextWrapping="Wrap"/>
+
+                                    <!-- Chi nhánh -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                        <TextBlock Text="📍 " FontSize="11" Foreground="#A08050"/>
+                                        <TextBlock Text="{Binding TenChiNhanh}"
+                                                   FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="#C9A84C"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                    </StackPanel>
+
+                                    <!-- Sức chứa -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                        <TextBlock Text="👥 Sức chứa: "
+                                                   FontSize="11" Foreground="#A08050"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                        <TextBlock Text="{Binding SucChua}"
+                                                   FontSize="11" FontWeight="Bold"
+                                                   Foreground="#2A1F0A"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                        <TextBlock Text=" người"
+                                                   FontSize="11" Foreground="#A08050"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                    </StackPanel>
+
+                                    <!-- Giá -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <TextBlock Text="💵 Giá: "
+                                                   FontSize="11" Foreground="#A08050"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                        <TextBlock Text="{Binding GiaThue, StringFormat={}{0:N0}}"
+                                                   FontSize="12" FontWeight="Bold"
+                                                   Foreground="#C9A84C"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                        <TextBlock Text=" VND"
+                                                   FontSize="11" Foreground="#A08050"
+                                                   FontFamily="Montserrat, Segoe UI"/>
+                                    </StackPanel>
+
+                                    <!-- Nút xem chi tiết -->
+                                    <!-- THAY nút "Xem chi tiết & Đặt tiệc" cũ bằng đoạn này -->
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="8"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button Grid.Column="0"
+            Content="🗓 Đặt sảnh"
+            Style="{StaticResource DetailButtonStyle}"
+            Tag="{Binding}"
+            Click="BtnDatSanh_Click"/>
+
+                                        <Button Grid.Column="2"
+            Content="🔍 Chi tiết"
+            Style="{StaticResource OutlineButtonStyle}"
+            Tag="{Binding}"
+            Click="BtnXemChiTiet_Click"/>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

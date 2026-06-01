@@ -1,0 +1,235 @@
+﻿<Window x:Class="DoAnCN_Net.UI.ChiTietMenuDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Chi tiết menu" Width="600" Height="520"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <Style x:Key="Btn" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background"      Value="#F8F9FA"/>
+            <Setter Property="Foreground"      Value="#555"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="FontSize"        Value="12"/>
+            <Setter Property="Padding"         Value="12,0"/>
+            <Setter Property="BorderBrush"     Value="#EEEEEE"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EEF2FF"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#E8EDFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding"           Value="12,0"/>
+            <Setter Property="BorderThickness"   Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="#333"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Border CornerRadius="14" Background="White">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" Opacity="0.13" BlurRadius="32" ShadowDepth="5"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- HEADER -->
+            <Border Grid.Row="0" Background="#1a1a2e" CornerRadius="14,14,0,0"
+                    MouseLeftButtonDown="Header_MouseLeftButtonDown">
+                <Grid Margin="18,0,10,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="🍽" FontSize="16" Margin="0,0,9,0" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="txtTitle" Text="Chi tiết menu"
+                                   FontSize="14" FontWeight="Bold" Foreground="White"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button Content="✕" HorizontalAlignment="Right"
+                            Width="30" Height="30"
+                            Background="Transparent" BorderThickness="0"
+                            Foreground="#7788AA" FontSize="14"
+                            Click="btnClose_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- BODY -->
+            <Grid Grid.Row="1" Margin="16,14,16,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- CỘT TRÁI: Món đang có trong menu -->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Món trong menu"
+                               FontSize="12" FontWeight="SemiBold"
+                               Foreground="#555" Margin="2,0,0,6"/>
+
+                    <Border Grid.Row="1" BorderBrush="#E2E5ED" BorderThickness="1"
+                            CornerRadius="8">
+                        <DataGrid x:Name="dgTrongMenu"
+                                  Background="White" BorderThickness="0"
+                                  AutoGenerateColumns="False" IsReadOnly="True"
+                                  CanUserAddRows="False" CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#F0F0F0"
+                                  FontSize="13" RowHeight="38"
+                                  ColumnHeaderHeight="36"
+                                  SelectionMode="Single" SelectionUnit="FullRow"
+                                  HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Tên món"
+                                                    Binding="{Binding TenMon}" Width="*"/>
+                                <DataGridTextColumn Header="Giá"
+                                                    Binding="{Binding GiaText}" Width="90"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- Nút Xóa khỏi menu -->
+                    <Button Grid.Row="2" Margin="0,8,0,0"
+                            Style="{StaticResource Btn}"
+                            Background="#e74c3c" Foreground="White"
+                            Padding="14,8"
+                            Click="btnXoaKhoiMenu_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="🗑 " FontSize="13"/>
+                            <TextBlock Text="Xóa khỏi menu"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <!-- MŨI TÊN GIỮA -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="◀" FontSize="16" Foreground="#3d5af1"
+                               HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                    <TextBlock Text="▶" FontSize="16" Foreground="#CCCCCC"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- CỘT PHẢI: Tất cả món ăn -->
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Tất cả món ăn"
+                               FontSize="12" FontWeight="SemiBold"
+                               Foreground="#555" Margin="2,0,0,6"/>
+
+                    <Border Grid.Row="1" BorderBrush="#E2E5ED" BorderThickness="1"
+                            CornerRadius="8">
+                        <DataGrid x:Name="dgTatCaMon"
+                                  Background="White" BorderThickness="0"
+                                  AutoGenerateColumns="False" IsReadOnly="True"
+                                  CanUserAddRows="False" CanUserDeleteRows="False"
+                                  CanUserResizeRows="False"
+                                  GridLinesVisibility="Horizontal"
+                                  HorizontalGridLinesBrush="#F0F0F0"
+                                  FontSize="13" RowHeight="38"
+                                  ColumnHeaderHeight="36"
+                                  SelectionMode="Single" SelectionUnit="FullRow"
+                                  HeadersVisibility="Column">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Tên món"
+                                                    Binding="{Binding TenMon}" Width="*"/>
+                                <DataGridTextColumn Header="Giá"
+                                                    Binding="{Binding GiaText}" Width="90"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+
+                    <!-- Nút Thêm vào menu -->
+                    <Button Grid.Row="2" Margin="0,8,0,0"
+                            Style="{StaticResource Btn}"
+                            Background="#3d5af1" Foreground="White"
+                            Padding="14,8"
+                            Click="btnThemVaoMenu_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="＋ " FontSize="13"/>
+                            <TextBlock Text="Thêm vào menu"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <!-- ERROR -->
+            <Border x:Name="pnlError" Grid.Row="2"
+                    Margin="16,0,16,8"
+                    Background="#FFF0F2" CornerRadius="7" Padding="10,7"
+                    Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="! " Foreground="#e94560" FontSize="12" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtError" Foreground="#e94560"
+                               FontSize="12" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+
+            <!-- FOOTER -->
+            <Border Grid.Row="2" BorderBrush="#EBEBEB" BorderThickness="0,1,0,0"
+                    Padding="16,10">
+                <Button Style="{StaticResource Btn}"
+                        Background="#EEEEEE" Foreground="#666"
+                        Padding="20,8" HorizontalAlignment="Right"
+                        Content="Đóng" Click="btnClose_Click"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

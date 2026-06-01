@@ -1,0 +1,684 @@
+﻿<Window x:Class="DoAnCN_Net.ChiTietSanhWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Đặt Tiệc — Adora"
+        Width="700" Height="860"
+        MinWidth="700" MinHeight="860"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F7F4EF">
+
+    <Window.Resources>
+        <!-- ═══ MÀU SẮC ═══ -->
+        <SolidColorBrush x:Key="Gold"       Color="#C9A84C"/>
+        <SolidColorBrush x:Key="GoldDark"   Color="#A8872E"/>
+        <SolidColorBrush x:Key="GoldLight"  Color="#FBF0CC"/>
+        <SolidColorBrush x:Key="TextPri"    Color="#1E1206"/>
+        <SolidColorBrush x:Key="TextSec"    Color="#6B5430"/>
+        <SolidColorBrush x:Key="TextMuted"  Color="#A08050"/>
+        <SolidColorBrush x:Key="BorderCol"  Color="#E0D0B0"/>
+        <SolidColorBrush x:Key="White"      Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="Red"        Color="#C0392B"/>
+        <SolidColorBrush x:Key="Green"      Color="#27AE60"/>
+        <SolidColorBrush x:Key="Blue"       Color="#2980B9"/>
+        <SolidColorBrush x:Key="PageBg"     Color="#F7F4EF"/>
+        <SolidColorBrush x:Key="CardBg"     Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="InputBg"    Color="#FDFAF5"/>
+
+        <!-- ═══ GRADIENT NÚT VÀNG ═══ -->
+        <LinearGradientBrush x:Key="GoldGrad" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#C9A84C" Offset="0"/>
+            <GradientStop Color="#D4B254" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- ═══ LABEL SECTION ═══ -->
+        <Style x:Key="SectionLabel" TargetType="TextBlock">
+            <Setter Property="FontSize"   Value="10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMuted}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin"     Value="0,0,0,5"/>
+        </Style>
+
+        <!-- ═══ LABEL TRƯỜNG ═══ -->
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize"   Value="11"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSec}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Margin"     Value="0,0,0,4"/>
+        </Style>
+
+        <!-- ═══ TEXTBOX — SỬA: Padding 10,0 và ScrollViewer Margin cố định ═══ -->
+        <Style x:Key="InputStyle" TargetType="TextBox">
+            <Setter Property="FontSize"          Value="13"/>
+            <Setter Property="FontFamily"        Value="Segoe UI"/>
+            <Setter Property="Foreground"        Value="{StaticResource TextPri}"/>
+            <Setter Property="Background"        Value="{StaticResource InputBg}"/>
+            <Setter Property="BorderBrush"       Value="{StaticResource BorderCol}"/>
+            <Setter Property="BorderThickness"   Value="1"/>
+            <Setter Property="Padding"           Value="0"/>
+            <Setter Property="Height"            Value="36"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <!-- SỬA: Margin cố định thay vì TemplateBinding Padding -->
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="10,0,10,0"
+                                          VerticalAlignment="Center"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource Gold}"/>
+                                <Setter TargetName="bd" Property="BorderThickness" Value="1.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ═══ COMBOBOX ═══ -->
+        <Style x:Key="ComboStyle" TargetType="ComboBox">
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextPri}"/>
+            <Setter Property="Background"      Value="{StaticResource InputBg}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource BorderCol}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="8,0"/>
+            <Setter Property="Height"          Value="36"/>
+            <!-- SỬA: đảm bảo chữ không bị cắt trong ComboBox -->
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- ═══ NÚT VÀNG CHÍNH ═══ -->
+        <Style x:Key="BtnGold" TargetType="Button">
+            <Setter Property="Background"      Value="{StaticResource GoldGrad}"/>
+            <Setter Property="Foreground"      Value="White"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Height"          Value="42"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Opacity" Value="0.88"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bg" Property="Opacity" Value="0.75"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ═══ NÚT XÁM ═══ -->
+        <Style x:Key="BtnGray" TargetType="Button">
+            <Setter Property="Background"      Value="#D0CAC0"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextSec}"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Height"          Value="42"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ═══ NÚT OUTLINE ═══ -->
+        <Style x:Key="BtnOutline" TargetType="Button">
+            <Setter Property="Background"      Value="Transparent"/>
+            <Setter Property="Foreground"      Value="{StaticResource Blue}"/>
+            <Setter Property="FontSize"        Value="12"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource Blue}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Height"          Value="34"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bg"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bg" Property="Background" Value="#EBF5FB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ═══ CARD ═══ -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background"      Value="{StaticResource CardBg}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource BorderCol}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius"    Value="8"/>
+            <Setter Property="Padding"         Value="18,14"/>
+            <Setter Property="Margin"          Value="0,0,0,12"/>
+        </Style>
+
+        <!-- ═══ CHECKBOX DỊCH VỤ ═══ -->
+        <Style x:Key="DvCheck" TargetType="CheckBox">
+            <Setter Property="Foreground"  Value="{StaticResource TextPri}"/>
+            <Setter Property="FontSize"    Value="12"/>
+            <Setter Property="FontFamily"  Value="Segoe UI"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor"      Value="Hand"/>
+        </Style>
+
+        <!-- ═══ SỬA: Style cho DatePicker hiển thị chữ đúng màu ═══ -->
+        <Style x:Key="DatePickerStyle" TargetType="DatePicker">
+            <Setter Property="Height"          Value="36"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="Foreground"      Value="{StaticResource TextPri}"/>
+            <Setter Property="Background"      Value="{StaticResource InputBg}"/>
+            <Setter Property="BorderBrush"     Value="{StaticResource BorderCol}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding"         Value="6,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- SỬA: TextBox bên trong DatePicker cũng phải có màu chữ đúng -->
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Foreground"   Value="{StaticResource TextPri}"/>
+            <Setter Property="Background"   Value="{StaticResource InputBg}"/>
+            <Setter Property="FontSize"     Value="13"/>
+            <Setter Property="FontFamily"   Value="Segoe UI"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding"      Value="4,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DatePickerTextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderThickness="0">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="0"
+                                          VerticalAlignment="Center"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="24,20,24,24">
+
+            <!-- ══════ HEADER ══════ -->
+            <Border Margin="0,0,0,16" CornerRadius="8">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#2C1A00" Offset="0"/>
+                        <GradientStop Color="#4A2E00" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Margin="20,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="ĐẶT TIỆC"
+                                   FontSize="11" FontWeight="SemiBold"
+                                   Foreground="#C9A84C" FontFamily="Segoe UI"
+                                   Margin="0,0,0,3"/>
+                        <TextBlock x:Name="lblTenSanh"
+                                   FontSize="20" FontWeight="Bold"
+                                   Foreground="White"
+                                   FontFamily="Georgia, serif"/>
+                        <TextBlock x:Name="lblChiNhanh"
+                                   FontSize="12" Foreground="#C9A84C"
+                                   FontFamily="Segoe UI" Margin="0,3,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                        <TextBlock x:Name="lblGiaThue"
+                                   FontSize="18" FontWeight="Bold"
+                                   Foreground="#C9A84C" FontFamily="Segoe UI"
+                                   HorizontalAlignment="Right"/>
+                        <TextBlock Text="VNĐ / buổi"
+                                   FontSize="10" Foreground="#A08050"
+                                   HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ══════ ẢNH + THÔNG TIN NHANH ══════ -->
+            <Grid Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="240"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Ảnh -->
+                <Border Grid.Column="0" CornerRadius="8" ClipToBounds="True"
+                        Height="148" Background="#EDE5D0">
+                    <Image x:Name="imgSanh" Stretch="UniformToFill"/>
+                </Border>
+
+                <!-- Thông tin nhanh -->
+                <StackPanel Grid.Column="2" VerticalAlignment="Stretch">
+                    <!-- Sức chứa -->
+                    <Border Style="{StaticResource Card}" Padding="14,10" Margin="0,0,0,8">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="👥" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <StackPanel>
+                                <TextBlock Text="SỨC CHỨA" Style="{StaticResource SectionLabel}" Margin="0"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="lblSucChua"
+                                               FontSize="18" FontWeight="Bold"
+                                               Foreground="#2980B9" FontFamily="Segoe UI"/>
+                                    <TextBlock Text=" người" FontSize="12"
+                                               Foreground="{StaticResource TextMuted}"
+                                               VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <!-- Đánh giá -->
+                    <Border Style="{StaticResource Card}" Padding="14,10" Margin="0,0,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⭐" FontSize="16" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <StackPanel>
+                                <TextBlock Text="ĐÁNH GIÁ" Style="{StaticResource SectionLabel}" Margin="0"/>
+                                <TextBlock x:Name="lblDanhGia"
+                                           Text="Chưa có đánh giá"
+                                           FontSize="13" Foreground="{StaticResource TextSec}"
+                                           FontFamily="Segoe UI"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- ══════ SEPARATOR ══════ -->
+            <Border Height="1" Margin="0,4,0,14">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Transparent" Offset="0"/>
+                        <GradientStop Color="#C9A84C"     Offset="0.5"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- ══════ SECTION: THÔNG TIN KHÁCH ══════ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="THÔNG TIN KHÁCH HÀNG" Style="{StaticResource SectionLabel}"/>
+
+                    <!-- Tên khách -->
+                    <TextBlock Text="Tên khách hàng *" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="txtTenKhach" Style="{StaticResource InputStyle}"
+                             Margin="0,0,0,10"/>
+
+                    <!-- SĐT + Email -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Số điện thoại *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="txtSoDienThoai" Style="{StaticResource InputStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="txtEmail" Style="{StaticResource InputStyle}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════ SECTION: THÔNG TIN SỰ KIỆN ══════ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="THÔNG TIN SỰ KIỆN" Style="{StaticResource SectionLabel}"/>
+
+                    <!-- Tên SK + Loại SK -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Tên sự kiện *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="txtTenSuKien" Style="{StaticResource InputStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Loại sự kiện *" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="cboLoaiSuKien" Style="{StaticResource ComboStyle}"
+                                      DisplayMemberPath="TenLoai"
+                                      SelectedValuePath="MaLoai"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Ngày + Giờ -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Ngày tổ chức *" Style="{StaticResource FieldLabel}"/>
+                            <!-- SỬA: dùng Style DatePickerStyle -->
+                            <DatePicker x:Name="dpNgayToChuc"
+                                        Style="{StaticResource DatePickerStyle}"
+                                        SelectedDateChanged="Dp_Changed"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Giờ bắt đầu *" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="cboGioBatDau" Style="{StaticResource ComboStyle}"
+                                      SelectionChanged="Dp_Changed"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Giờ kết thúc *" Style="{StaticResource FieldLabel}"/>
+                            <ComboBox x:Name="cboGioKetThuc" Style="{StaticResource ComboStyle}"
+                                      SelectionChanged="Dp_Changed"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Cảnh báo trùng lịch -->
+                    <Border x:Name="bdCanhBao" Background="#FEE8E8"
+                            BorderBrush="#F5C6C6" BorderThickness="1"
+                            CornerRadius="4" Padding="10,7"
+                            Margin="0,8,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="lblCanhBao"
+                                   Text="⚠️  Sảnh đã có lịch trong khung giờ này!"
+                                   FontSize="12" Foreground="#C0392B" FontFamily="Segoe UI"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════ SECTION: SỐ LƯỢNG BÀN ══════ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="SỐ LƯỢNG BÀN" Style="{StaticResource SectionLabel}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Số bàn *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="txtSoBan" Style="{StaticResource InputStyle}"
+                                     Text="1" TextChanged="TxtSoBan_Changed"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Khách / bàn *" Style="{StaticResource FieldLabel}"/>
+                            <TextBox x:Name="txtKhachMoiBan" Style="{StaticResource InputStyle}"
+                                     Text="10" TextChanged="TxtSoBan_Changed"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="4" VerticalAlignment="Bottom">
+                            <TextBlock Text="Tổng khách" Style="{StaticResource FieldLabel}"/>
+                            <Border Background="{StaticResource GoldLight}"
+                                    BorderBrush="{StaticResource Gold}"
+                                    BorderThickness="1" CornerRadius="4"
+                                    Height="36" Padding="10,0">
+                                <TextBlock x:Name="lblTongKhach"
+                                           Text="10 người"
+                                           FontSize="13" FontWeight="SemiBold"
+                                           Foreground="{StaticResource GoldDark}"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <!-- Cảnh báo bàn -->
+                    <Border x:Name="bdCanhBaoBan" Background="#FEE8E8"
+                            BorderBrush="#F5C6C6" BorderThickness="1"
+                            CornerRadius="4" Padding="10,7"
+                            Margin="0,8,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="lblCanhBaoBan"
+                                   Text="⚠️  Tổng khách vượt sức chứa của sảnh!"
+                                   FontSize="12" Foreground="#C0392B" FontFamily="Segoe UI"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════ SECTION: MENU ══════ -->
+            <Border Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="GÓI MENU" Style="{StaticResource SectionLabel}"/>
+                        <ComboBox x:Name="cboMenu" Style="{StaticResource ComboStyle}"
+                                  DisplayMemberPath="TenMenu"
+                                  SelectedValuePath="MaMenu"/>
+                        <TextBlock Text="ℹ  Sảnh cho phép tự chọn menu chay hoặc mặn"
+                                   FontSize="10" Foreground="{StaticResource TextMuted}"
+                                   FontFamily="Segoe UI" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <Button Grid.Column="2" Content="📖  Xem chi tiết menu"
+                            Style="{StaticResource BtnOutline}"
+                            VerticalAlignment="Center" Padding="12,0"
+                            Click="BtnXemMenu_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- ══════ SECTION: DỊCH VỤ ══════ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="DỊCH VỤ KÈM THEO  (tuỳ chọn)"
+                               Style="{StaticResource SectionLabel}"/>
+                    <ItemsControl x:Name="icDichVu">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="2"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource InputBg}"
+                                        BorderBrush="{StaticResource BorderCol}"
+                                        BorderThickness="1" CornerRadius="4"
+                                        Padding="10,8" Margin="0,0,6,6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Grid.Column="0"
+                                                  IsChecked="{Binding DaChon, Mode=TwoWay}"
+                                                  VerticalAlignment="Center"
+                                                  Checked="DichVu_Changed"
+                                                  Unchecked="DichVu_Changed"
+                                                  Cursor="Hand"/>
+                                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding TenDichVu}"
+                                                       FontSize="12" FontWeight="SemiBold"
+                                                       Foreground="{StaticResource TextPri}"
+                                                       FontFamily="Segoe UI"/>
+                                            <TextBlock Text="{Binding MoTa}"
+                                                       FontSize="10"
+                                                       Foreground="{StaticResource TextMuted}"
+                                                       FontFamily="Segoe UI"
+                                                       TextTrimming="CharacterEllipsis"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding Gia, StringFormat={}{0:N0}}"
+                                                   FontSize="11" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource Gold}"
+                                                   VerticalAlignment="Center"
+                                                   Margin="6,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════ SECTION: KHUYẾN MÃI ══════ -->
+            <Border Style="{StaticResource Card}">
+                <StackPanel>
+                    <TextBlock Text="KHUYẾN MÃI  (tuỳ chọn)"
+                               Style="{StaticResource SectionLabel}"/>
+                    <ComboBox x:Name="cboKhuyenMai" Style="{StaticResource ComboStyle}"
+                              DisplayMemberPath="TenKhuyenMai"
+                              SelectedValuePath="MaKhuyenMai"
+                              SelectionChanged="CboKhuyenMai_Changed"/>
+                    <Border x:Name="bdMoTaKM" Background="#EAF5EA"
+                            BorderBrush="#A9DFBF" BorderThickness="1"
+                            CornerRadius="4" Padding="10,7"
+                            Margin="0,8,0,0" Visibility="Collapsed">
+                        <TextBlock x:Name="lblMoTaKM"
+                                   FontSize="12" Foreground="#1E8449" FontFamily="Segoe UI"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════ TỔNG TIỀN ══════ -->
+            <Border CornerRadius="8" Padding="18,14" Margin="0,0,0,12"
+                    BorderThickness="1">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#FBF0CC" Offset="0"/>
+                        <GradientStop Color="#FDF8EE" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.BorderBrush>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#C9A84C" Offset="0"/>
+                        <GradientStop Color="#E8D9B5" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <!-- Dòng giá sảnh -->
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock Text="Giá thuê sảnh"
+                                       FontSize="12" Foreground="{StaticResource TextSec}"
+                                       FontFamily="Segoe UI" Width="130"/>
+                            <TextBlock x:Name="lblGiaSanh2"
+                                       FontSize="12" Foreground="{StaticResource TextPri}"
+                                       FontFamily="Segoe UI"/>
+                        </StackPanel>
+                        <!-- Dòng dịch vụ -->
+                        <StackPanel x:Name="rowDichVu" Orientation="Horizontal"
+                                    Margin="0,0,0,3" Visibility="Collapsed">
+                            <TextBlock Text="Dịch vụ"
+                                       FontSize="12" Foreground="{StaticResource TextSec}"
+                                       FontFamily="Segoe UI" Width="130"/>
+                            <TextBlock x:Name="lblTongDichVu"
+                                       FontSize="12" Foreground="#8E44AD"
+                                       FontFamily="Segoe UI"/>
+                        </StackPanel>
+                        <!-- Dòng giảm giá -->
+                        <StackPanel x:Name="rowKM" Orientation="Horizontal"
+                                    Margin="0,0,0,3" Visibility="Collapsed">
+                            <TextBlock Text="Giảm giá"
+                                       FontSize="12" Foreground="{StaticResource TextSec}"
+                                       FontFamily="Segoe UI" Width="130"/>
+                            <TextBlock FontSize="12" Foreground="#27AE60" Text="- "/>
+                            <TextBlock x:Name="lblGiamGia"
+                                       FontSize="12" Foreground="#27AE60"
+                                       FontFamily="Segoe UI"/>
+                        </StackPanel>
+                        <!-- Đường kẻ -->
+                        <Rectangle Height="1" Fill="#D4B254" Opacity="0.4" Margin="0,5,0,6"/>
+                        <!-- Tổng -->
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="TỔNG THANH TOÁN"
+                                       FontSize="11" FontWeight="SemiBold"
+                                       Foreground="{StaticResource GoldDark}"
+                                       FontFamily="Segoe UI" Width="130"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock x:Name="lblTamTinh"
+                                       FontSize="20" FontWeight="Bold"
+                                       Foreground="{StaticResource GoldDark}"
+                                       FontFamily="Segoe UI"/>
+                            <TextBlock Text=" VNĐ" FontSize="12"
+                                       Foreground="{StaticResource GoldDark}"
+                                       VerticalAlignment="Bottom" Margin="0,0,0,3"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" Text="💰"
+                               FontSize="36" VerticalAlignment="Center"
+                               Opacity="0.25" Margin="16,0,0,0"/>
+                </Grid>
+            </Border>
+
+            <!-- ══════ BUTTONS ══════ -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Huỷ"
+                        Style="{StaticResource BtnGray}"
+                        Click="BtnHuy_Click"/>
+                <Button Grid.Column="2" Content="✔   XÁC NHẬN ĐẶT TIỆC"
+                        Style="{StaticResource BtnGold}"
+                        Click="BtnDatTiec_Click"/>
+            </Grid>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>

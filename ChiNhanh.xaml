@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="DoAnCN_Net.ChiNhanhView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2C3E50" Padding="15" CornerRadius="8" Margin="0,0,0,10">
+            <TextBlock Text="QUAN LY CHI NHANH" 
+                       FontSize="22" 
+                       FontWeight="Bold" 
+                       Foreground="White"
+                       HorizontalAlignment="Center"/>
+        </Border>
+
+        <!-- Form CRUD -->
+        <Border Grid.Row="1" Background="#F8F9FA" Padding="15" CornerRadius="8" Margin="0,0,0,10">
+            <StackPanel>
+                <TextBlock Text="THONG TIN CHI NHANH" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#2C3E50"
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,0,15"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Ten chi nhanh -->
+                    <TextBlock Text="Ten chi nhanh:" Grid.Row="0" Grid.Column="0" 
+                               VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtTen" Grid.Row="0" Grid.Column="1" 
+                             Margin="5" Padding="8" BorderBrush="#CED4DA" BorderThickness="1"/>
+
+                    <!-- Dia chi -->
+                    <TextBlock Text="Dia chi:" Grid.Row="0" Grid.Column="2" 
+                               VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtDiaChi" Grid.Row="0" Grid.Column="3" 
+                             Margin="5" Padding="8" BorderBrush="#CED4DA" BorderThickness="1"/>
+
+                    <!-- So dien thoai -->
+                    <TextBlock Text="So dien thoai:" Grid.Row="1" Grid.Column="0" 
+                               VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    <TextBox x:Name="txtSDT" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" 
+                             Margin="5" Padding="8" BorderBrush="#CED4DA" BorderThickness="1"/>
+                </Grid>
+
+                <!-- Button Actions -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                    <Button x:Name="btnThem" Content="Them moi" 
+                            Click="BtnThem_Click" Width="110" Margin="5" 
+                            Background="#27AE60" Foreground="White" Padding="8" Cursor="Hand"/>
+                    <Button x:Name="btnSua" Content="Cap nhat" 
+                            Click="BtnSua_Click" Width="110" Margin="5" 
+                            Background="#F39C12" Foreground="White" Padding="8" Cursor="Hand"/>
+                    <Button x:Name="btnXoa" Content="Xoa" 
+                            Click="BtnXoa_Click" Width="110" Margin="5" 
+                            Background="#E74C3C" Foreground="White" Padding="8" Cursor="Hand"/>
+                    <Button x:Name="btnLamMoi" Content="Lam moi" 
+                            Click="BtnLamMoi_Click" Width="110" Margin="5" 
+                            Background="#7F8C8D" Foreground="White" Padding="8" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- DataGrid hien thi danh sach -->
+        <Border Grid.Row="2" Background="White" CornerRadius="8" Padding="10">
+            <DataGrid x:Name="dgChiNhanh"
+                      AutoGenerateColumns="False"
+                      SelectionChanged="dgChiNhanh_SelectionChanged"
+                      RowHeight="40"
+                      GridLinesVisibility="Horizontal"
+                      HeadersVisibility="Column"
+                      BorderThickness="0"
+                      AlternatingRowBackground="#F8F9FA">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#2C3E50"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Ma CN" Binding="{Binding MaChiNhanh}" Width="80"/>
+                    <DataGridTextColumn Header="Ten chi nhanh" Binding="{Binding TenChiNhanh}" Width="*"/>
+                    <DataGridTextColumn Header="Dia chi" Binding="{Binding DiaChi}" Width="*"/>
+                    <DataGridTextColumn Header="So dien thoai" Binding="{Binding SoDienThoai}" Width="150"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>
